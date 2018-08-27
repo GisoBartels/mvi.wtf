@@ -1,0 +1,26 @@
+buildscript {
+    ext {
+        mviWtfVersion = '0.1'
+        kotlinVersion = '1.2.61'
+        kotlinxCoroutinesVersion = '0.24.0'
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.android.tools.build:gradle:3.1.4"
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+    }
+}
