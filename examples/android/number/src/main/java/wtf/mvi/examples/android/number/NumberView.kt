@@ -5,7 +5,7 @@ import wtf.mvi.MviView
 
 interface NumberView : MviView<NumberViewState> {
 
-    val plusIntent: MviIntent
-    val minusIntent: MviIntent
+    val plusIntent: MviIntent<Unit>
+    val minusIntent: MviIntent<Unit>
 
 }

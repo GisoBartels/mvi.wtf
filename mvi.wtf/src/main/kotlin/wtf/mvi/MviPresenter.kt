@@ -1,5 +1,7 @@
 package wtf.mvi
 
+import wtf.mvi.subscription.Subscription
+
 interface MviPresenter<ViewType : MviView<*>> {
 
     val intentActions: IntentActions<ViewType>
@@ -12,7 +14,10 @@ interface MviPresenter<ViewType : MviView<*>> {
         intentActions.unsubscribe()
     }
 
+    fun intentActions(vararg actions: ViewType.() -> Subscription) = IntentActions(*actions)
+
 }
 
-fun <ViewType : MviView<*>> MviPresenter<ViewType>.bind(vararg actions: ViewType.() -> Pair<MviIntent, () -> Unit>) =
-    IntentActions(*actions)
+
+
+

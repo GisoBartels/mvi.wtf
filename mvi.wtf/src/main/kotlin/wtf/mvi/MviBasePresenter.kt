@@ -3,7 +3,7 @@ package wtf.mvi
 import wtf.mvi.subscription.Subscribable
 import wtf.mvi.subscription.Subscription
 
-abstract class MviBasePresenter<ViewType : MviView<*>>() : MviPresenter<ViewType> {
+abstract class MviBasePresenter<ViewType : MviView<*>> : MviPresenter<ViewType> {
 
     private val subscriptions = mutableSetOf<Subscription>()
 

@@ -1,35 +1,38 @@
 package wtf.mvi
 
-import wtf.mvi.subscription.Subscription
 import kotlinx.coroutines.experimental.channels.BroadcastChannel
 import kotlinx.coroutines.experimental.channels.consumeEach
 import kotlinx.coroutines.experimental.launch
-import java.util.*
+import wtf.mvi.subscription.Subscription
 
-interface MviIntent
+class MviIntent<Data> {
 
-fun MviIntent.post() {
-    val intent = this
-    launch { subscriptions[intent]?.send(intent) }
+    private val channel = BroadcastChannel<Data>(1)
+
+    fun post(data: Data) {
+        launch { channel.send(data) }
+    }
+
+    fun subscribe(action: (Data) -> Unit): Subscription {
+        val channelSubscription = channel.openSubscription()
+        launch { channelSubscription.consumeEach { action(it) } }
+        return Subscription(channelSubscription)
+    }
 }
 
-fun MviIntent.subscribe(action: () -> Unit): Subscription {
-    val channel = subscriptions[this] ?: BroadcastChannel<MviIntent>(1).also { subscriptions[this] = it }
-    val channelSubscription = channel.openSubscription()
-    launch { channelSubscription.consumeEach { action() } }
-    return Subscription(channelSubscription)
+fun MviIntent<Unit>.post() {
+    post(Unit)
 }
 
-private val subscriptions = WeakHashMap<MviIntent, BroadcastChannel<MviIntent>>()
+fun MviIntent<Unit>.subscribe(action: () -> Unit) = subscribe { action() }
 
-class IntentActions<ViewType : MviView<*>>(private vararg val actions: ViewType.() -> Pair<MviIntent, () -> Unit>) {
+class IntentActions<ViewType : MviView<*>>(private vararg val intentActions: ViewType.() -> Subscription) {
 
     private val subscriptions = mutableSetOf<Subscription>()
 
     fun subscribe(view: ViewType) {
-        actions.forEach {
-            val (intent, action) = it(view)
-            subscriptions.add(intent.subscribe(action))
+        intentActions.forEach { intentAction ->
+            subscriptions.add(intentAction(view))
         }
     }
 
