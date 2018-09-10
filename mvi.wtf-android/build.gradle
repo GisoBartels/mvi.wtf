@@ -1,3 +1,8 @@
+plugins {
+    id 'digital.wup.android-maven-publish'
+    id "com.jfrog.bintray"
+}
+
 apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
@@ -20,3 +25,39 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
 
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+publishing {
+    publications {
+        mviWtf(MavenPublication) {
+            groupId 'wtf.mvi'
+            artifactId = 'android'
+            version mviWtfVersion
+
+            from components.android
+            artifact androidSourcesJar
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+
+    publications = ['mviWtf']
+    pkg {
+        repo = 'mvi.wtf'
+        name = 'android'
+        publish = false
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/GisoBartels/mvi.wtf.git'
+        version {
+            name = mviWtfVersion
+            released = new Date()
+            vcsTag = mviWtfVersion
+        }
+    }
+}

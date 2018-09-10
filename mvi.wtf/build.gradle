@@ -1,3 +1,8 @@
+plugins {
+    id 'maven-publish'
+    id "com.jfrog.bintray"
+}
+
 apply plugin: "kotlin"
 
 kotlin { experimental { coroutines 'enable' } }
@@ -5,4 +10,46 @@ kotlin { experimental { coroutines 'enable' } }
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mviWtf(MavenPublication) {
+            groupId 'wtf.mvi'
+            artifactId = 'core'
+            version mviWtfVersion
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    
+    publications = ['mviWtf']
+    pkg {
+        repo = 'mvi.wtf'
+        name = 'core'
+        publish = false
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/GisoBartels/mvi.wtf.git'
+        version {
+            name = mviWtfVersion
+            released = new Date()
+            vcsTag = mviWtfVersion
+        }
+    }
 }
