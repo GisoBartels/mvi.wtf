@@ -1,6 +1,6 @@
 package wtf.mvi.subscription
 
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 class SubscribableValue<T>(
     initialValue: T,

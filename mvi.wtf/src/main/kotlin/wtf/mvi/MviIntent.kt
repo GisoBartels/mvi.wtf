@@ -1,23 +1,24 @@
 package wtf.mvi
 
-import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.DefaultDispatcher
-import kotlinx.coroutines.experimental.channels.BroadcastChannel
-import kotlinx.coroutines.experimental.channels.consumeEach
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import wtf.mvi.subscription.Subscription
+import kotlin.coroutines.CoroutineContext
 
-class MviIntent<Data>(private val coroutineDispatcher: CoroutineDispatcher = DefaultDispatcher) {
+class MviIntent<Data>(override val coroutineContext: CoroutineContext = Dispatchers.Default) : CoroutineScope {
 
     private val channel = BroadcastChannel<Data>(1)
 
     fun post(data: Data) {
-        launch(coroutineDispatcher) { channel.send(data) }
+        launch { channel.send(data) }
     }
 
     fun subscribe(action: (Data) -> Unit): Subscription {
         val channelSubscription = channel.openSubscription()
-        launch(coroutineDispatcher) { channelSubscription.consumeEach { action(it) } }
+        launch { channelSubscription.consumeEach { action(it) } }
         return Subscription(channelSubscription)
     }
 }
