@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import wtf.mvi.subscription.Subscription
 import kotlin.coroutines.CoroutineContext
 
-class MviIntent<Data>(override val coroutineContext: CoroutineContext = Dispatchers.Default) : CoroutineScope {
+class MviIntent<Data>(override val coroutineContext: CoroutineContext = Dispatchers.Main) : CoroutineScope {
 
     private val channel = BroadcastChannel<Data>(1)
 
