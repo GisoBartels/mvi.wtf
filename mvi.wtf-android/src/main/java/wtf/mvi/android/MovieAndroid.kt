@@ -2,7 +2,6 @@ package wtf.mvi.android
 
 import android.view.View
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.android.Main
 import wtf.mvi.MviIntent
 import wtf.mvi.post
 import java.util.*
