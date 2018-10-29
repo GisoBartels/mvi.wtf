@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        mviWtfVersion = '0.2'
+        mviWtfVersion = '0.3'
         kotlinVersion = '1.3.0'
         kotlinxCoroutinesVersion = '1.0.0'
     }
