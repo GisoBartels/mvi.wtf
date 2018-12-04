@@ -3,7 +3,7 @@
     package="wtf.mvi.examples.android.number">
 
     <application android:label="mvi.wtf number example">
-        <activity android:name="wtf.mvi.examples.android.number.SimpleActivity">
+        <activity android:name="wtf.mvi.examples.android.number.NumberActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

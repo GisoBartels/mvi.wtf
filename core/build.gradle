@@ -7,7 +7,6 @@ apply plugin: "kotlin"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
 }
 
 task sourcesJar(type: Jar) {
@@ -36,7 +35,7 @@ publishing {
 bintray {
     user = bintrayUser
     key = bintrayApiKey
-    
+
     publications = ['mviWtf']
     pkg {
         repo = 'mvi.wtf'
