@@ -3,6 +3,7 @@ package wtf.mvi.examples.android.number
 import wtf.mvi.MviPresenter
 import wtf.mvi.examples.android.number.NumberView.NumberIntent.MinusIntent
 import wtf.mvi.examples.android.number.NumberView.NumberIntent.PlusIntent
+import wtf.mvi.intents
 import wtf.mvi.subscription.Subscription
 
 class NumberPresenter(private val numberInteractor: NumberInteractor) : MviPresenter<NumberView> {

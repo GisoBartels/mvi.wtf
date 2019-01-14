@@ -5,11 +5,9 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.simple_activity.*
 import wtf.mvi.examples.android.number.NumberView.NumberIntent.MinusIntent
 import wtf.mvi.examples.android.number.NumberView.NumberIntent.PlusIntent
-import wtf.mvi.intentSubscribable
+import wtf.mvi.intents
 
 class NumberActivity : Activity(), NumberView {
-
-    override val intents = intentSubscribable()
 
     private val numberPresenter = NumberPresenter(NumberInteractor)
 

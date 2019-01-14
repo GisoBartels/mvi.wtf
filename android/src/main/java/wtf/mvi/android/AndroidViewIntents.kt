@@ -3,12 +3,12 @@ package wtf.mvi.android
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
-import wtf.mvi.MviView
+import wtf.mvi.MviIntent
 import wtf.mvi.subscription.Subscribable
 
-fun Subscribable<MviView.Intent>.publishOnTextChange(
+fun Subscribable<MviIntent>.publishOnTextChange(
     textView: TextView,
-    intentConverter: (String) -> MviView.Intent
+    intentConverter: (String) -> MviIntent
 ) {
     textView.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
