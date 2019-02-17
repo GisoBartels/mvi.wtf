@@ -1,9 +1,10 @@
-package wtf.mvi.subscription
+package wtf.mvi.base
 
 import wtf.mvi.MviIntent
 import wtf.mvi.MviPresenter
 import wtf.mvi.MviView
 import wtf.mvi.intents
+import wtf.mvi.subscription.Subscription
 
 abstract class MviBasePresenter<ViewType : MviView<ViewState>, ViewState : MviView.State>(initialViewState: ViewState) :
     MviPresenter<ViewType> {
