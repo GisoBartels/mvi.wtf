@@ -19,6 +19,8 @@ task javadocJar(type: Jar) {
     classifier = 'javadoc'
 }
 
+group 'mvi.wtf'
+
 publishing {
     publications {
         mviWtf(MavenPublication) {
