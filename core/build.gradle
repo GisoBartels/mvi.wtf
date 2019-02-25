@@ -33,9 +33,9 @@ publishing {
 }
 
 bintray {
-    user = bintrayUser
-    key = bintrayApiKey
-
+    user = findProperty("bintrayUser")
+    key = findProperty("bintrayApiKey")
+    
     publications = ['mviWtf']
     pkg {
         repo = 'mvi.wtf'
