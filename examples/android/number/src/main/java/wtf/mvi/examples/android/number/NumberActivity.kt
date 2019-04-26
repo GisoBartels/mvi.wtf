@@ -5,7 +5,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.simple_activity.*
 import wtf.mvi.examples.android.number.NumberView.NumberIntent.MinusIntent
 import wtf.mvi.examples.android.number.NumberView.NumberIntent.PlusIntent
-import wtf.mvi.intents
+import wtf.mvi.publish
 
 class NumberActivity : Activity(), NumberView {
 
@@ -15,8 +15,8 @@ class NumberActivity : Activity(), NumberView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.simple_activity)
 
-        plusButton.setOnClickListener { intents.publish(PlusIntent) }
-        minusButton.setOnClickListener { intents.publish(MinusIntent) }
+        plusButton.setOnClickListener { publish(PlusIntent) }
+        minusButton.setOnClickListener { publish(MinusIntent) }
 
         numberPresenter.attachView(this)
     }

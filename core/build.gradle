@@ -1,35 +1,45 @@
 plugins {
+    id 'kotlin-multiplatform'
     id 'maven-publish'
     id "com.jfrog.bintray"
 }
 
-apply plugin: "kotlin"
+group 'wtf.mvi'
 
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-}
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = 'sources'
-}
-
-task javadocJar(type: Jar) {
-    from javadoc
-    classifier = 'javadoc'
-}
-
-group 'mvi.wtf'
-
-publishing {
-    publications {
-        mviWtf(MavenPublication) {
-            groupId 'wtf.mvi'
-            artifactId = 'core'
-            version mviWtfVersion
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
+kotlin {
+    jvm()
+    iosX64("ios") {
+        binaries {
+            framework()
+        }
+    }
+    
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation kotlin('stdlib-common')
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation kotlin('test-common')
+                implementation kotlin('test-annotations-common')
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation kotlin('stdlib')
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
+            }
+        }
+        iosMain {
+        }
+        iosTest {
         }
     }
 }
@@ -37,8 +47,8 @@ publishing {
 bintray {
     user = findProperty("bintrayUser")
     key = findProperty("bintrayApiKey")
-    
-    publications = ['mviWtf']
+
+    publications = publishing.publications
     pkg {
         repo = 'mvi.wtf'
         name = 'core'

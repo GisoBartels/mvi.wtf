@@ -1,10 +1,11 @@
 package wtf.mvi.subscription
 
-import java.util.concurrent.CopyOnWriteArraySet
-
 open class SimpleSubscribable<T> : Subscribable<T> {
 
-    private val subscriptions: MutableSet<(T) -> Unit> = CopyOnWriteArraySet()
+    private val subscriptions = mutableSetOf<(T) -> Unit>()
+
+    val activeSubscriptions: Int
+        get() = subscriptions.size
 
     override fun subscribe(action: (T) -> Unit): Subscription {
         subscriptions.add(action)
@@ -16,6 +17,7 @@ open class SimpleSubscribable<T> : Subscribable<T> {
     }
 
     override fun publish(item: T) {
-        subscriptions.forEach { it(item) }
+        subscriptions.toList().forEach { it(item) }
     }
+
 }

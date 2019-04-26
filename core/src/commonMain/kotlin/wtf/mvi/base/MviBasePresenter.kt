@@ -3,11 +3,11 @@ package wtf.mvi.base
 import wtf.mvi.MviIntent
 import wtf.mvi.MviPresenter
 import wtf.mvi.MviView
-import wtf.mvi.intents
+import wtf.mvi.subscribeToIntents
 import wtf.mvi.subscription.Subscription
 
 abstract class MviBasePresenter<ViewType : MviView<ViewState>, ViewState : MviView.State>(initialViewState: ViewState) :
-    MviPresenter<ViewType> {
+        MviPresenter<ViewType> {
 
     var viewState = initialViewState
         private set
@@ -28,7 +28,7 @@ abstract class MviBasePresenter<ViewType : MviView<ViewState>, ViewState : MviVi
     override fun attachView(view: ViewType) {
         this.view = view
         view.render(viewState)
-        intentSubscription = view.intents.subscribe { onIntent(it) }
+        intentSubscription = view.subscribeToIntents { onIntent(it) }
         onAttachView(view)
     }
 

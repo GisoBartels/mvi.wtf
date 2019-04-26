@@ -22,6 +22,8 @@ plugins {
 }
 
 allprojects {
+    version mviWtfVersion
+    
     repositories {
         jcenter()
         mavenCentral()
