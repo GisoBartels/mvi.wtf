@@ -6,6 +6,8 @@ interface MviPresenter<ViewType : MviView<*>> {
 
     fun detachView()
 
+    fun onIntent(intent: MviIntent)
+
 }
 
 
