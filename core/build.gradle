@@ -18,6 +18,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$kotlinCoroutinesVersion")
             }
         }
         commonTest {
@@ -29,6 +30,7 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin('stdlib')
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
             }
         }
         jvmTest {
