@@ -1,25 +1,15 @@
 package wtf.mvi.example.number
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import wtf.mvi.MviIntent
 import wtf.mvi.MviPresenter
 import wtf.mvi.example.number.NumberView.NumberIntent.MinusIntent
 import wtf.mvi.example.number.NumberView.NumberIntent.PlusIntent
-import wtf.mvi.subscription.Subscription
 
-class NumberPresenter(private val numberInteractor: NumberInteractor) : MviPresenter<NumberView> {
+class NumberPresenter(private val numberInteractor: NumberInteractor) : MviPresenter<NumberView.State> {
 
-    private var numberSubscription: Subscription? = null
-    private var intentSubscription: Subscription? = null
-
-    override fun attachView(view: NumberView) {
-        numberSubscription = numberInteractor.subscribe { view.render(NumberView.State(numberInteractor.number)) }
-        view.render(NumberView.State(numberInteractor.number))
-    }
-
-    override fun detachView() {
-        numberSubscription?.cancel()
-        intentSubscription?.cancel()
-    }
+    override val renderFlow: Flow<NumberView.State> = numberInteractor.number.flow.map { NumberView.State(it) }
 
     override fun onIntent(intent: MviIntent) {
         when (intent) {

@@ -1,10 +1,10 @@
 package wtf.mvi
 
-interface MviPresenter<ViewType : MviView<*>> {
+import kotlinx.coroutines.flow.Flow
 
-    fun attachView(view: ViewType)
+interface MviPresenter<ViewStateType : MviView.State> {
 
-    fun detachView()
+    val renderFlow: Flow<ViewStateType>
 
     fun onIntent(intent: MviIntent)
 

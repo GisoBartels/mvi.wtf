@@ -2,29 +2,20 @@ import UIKit
 import app
 
 class ViewController: UIViewController, NumberView {
-
-    let presenter = NumberPresenter(numberInteractor: NumberInteractor())
+    
+    let numberView = NumberViewIos()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        presenter.attachView(view: self)
+        numberView.render(numberText: label)
     }
     
-    func render(viewState: CoreMviViewState) {
-        let numberViewState = viewState as! NumberViewState
-        label.text = String(numberViewState.number)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     @IBOutlet weak var label: UILabel!
 
     @IBAction func minusPressed() {
-        presenter.onIntent(intent: NumberViewNumberIntent.MinusIntent())
+        numberView.minusPressed()
     }
     
     @IBAction func plusPressed() {
-        presenter.onIntent(intent: NumberViewNumberIntent.PlusIntent())
+        numberView.plusPressed()
     }
 }

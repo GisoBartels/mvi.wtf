@@ -3,6 +3,11 @@ package wtf.mvi.example.number.android
 import android.app.Activity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.number_activity.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import wtf.mvi.example.number.NumberInteractor
 import wtf.mvi.example.number.NumberPresenter
 import wtf.mvi.example.number.NumberView
@@ -10,7 +15,7 @@ import wtf.mvi.example.number.NumberView.NumberIntent.MinusIntent
 import wtf.mvi.example.number.NumberView.NumberIntent.PlusIntent
 import wtf.mvi.example.number.R
 
-class NumberActivity : Activity(), NumberView {
+class NumberActivity : Activity(), NumberView, CoroutineScope by MainScope() {
 
     private val numberPresenter = NumberPresenter(NumberInteractor())
 
@@ -21,16 +26,16 @@ class NumberActivity : Activity(), NumberView {
         plusButton.setOnClickListener { numberPresenter.onIntent(PlusIntent) }
         minusButton.setOnClickListener { numberPresenter.onIntent(MinusIntent) }
 
-        numberPresenter.attachView(this)
+        launch {
+            numberPresenter.renderFlow.collect {
+                numberView.text = it.number.toString()
+            }
+        }
     }
 
     override fun onDestroy() {
-        numberPresenter.detachView()
+        cancel()
         super.onDestroy()
-    }
-
-    override fun render(viewState: NumberView.State) {
-        numberView.text = viewState.number.toString()
     }
 
 }

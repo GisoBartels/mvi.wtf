@@ -24,6 +24,13 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions.freeCompilerArgs += [
+            "-Xuse-experimental=kotlin.Experimental",
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    ]
+}
+
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs

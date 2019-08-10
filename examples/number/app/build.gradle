@@ -64,8 +64,16 @@ kotlin {
             }
         }
         iosMain {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$kotlinCoroutinesVersion")
+            }
         }
         iosTest {
+        }
+        all {
+            languageSettings {
+                useExperimentalAnnotation('kotlin.Experimental')
+            }
         }
     }
 }

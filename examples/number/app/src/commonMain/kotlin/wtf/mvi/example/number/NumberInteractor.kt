@@ -1,19 +1,15 @@
 package wtf.mvi.example.number
 
-import wtf.mvi.subscription.SimpleSubscribable
-import kotlin.properties.Delegates.observable
+class NumberInteractor {
 
-class NumberInteractor : SimpleSubscribable<Int>() {
-
-    var number by observable(0) { _, _, newValue -> publish(newValue) }
-        private set
+    val number = Source(0)
 
     fun increase() {
-        number++
+        number.value++
     }
 
     fun decrease() {
-        number--
+        number.value--
     }
 
 }
