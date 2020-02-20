@@ -65,9 +65,9 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
                 implementation "androidx.activity:activity-ktx:1.1.0"
                 implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-                implementation 'androidx.ui:ui-tooling:0.1.0-dev02'
-                implementation 'androidx.ui:ui-layout:0.1.0-dev02'
-                implementation 'androidx.ui:ui-material:0.1.0-dev02'
+                implementation 'androidx.ui:ui-tooling:0.1.0-dev05'
+                implementation 'androidx.ui:ui-layout:0.1.0-dev05'
+                implementation 'androidx.ui:ui-material:0.1.0-dev05'
             }
         }
         androidTest {
